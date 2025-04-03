@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from flask import Flask, request, send_file
 import io
+import os
 
 def generate_image(name, last_name):
     # Load the template image
@@ -10,7 +11,11 @@ def generate_image(name, last_name):
     draw = ImageDraw.Draw(image)
 
     # Load a font (adjust path if needed)
-    font = ImageFont.truetype("futura\Futura Bold font.ttf", 60)
+    try:
+        font_path = os.path.join("static", "Futura-Bold.ttf")
+        font = ImageFont.truetype(font_path, 60)
+    except IOError:
+        raise RuntimeError("Font file not found or could not be loaded. Please check the font path.")
 
     # Get image dimensions
     img_width, img_height = image.size
