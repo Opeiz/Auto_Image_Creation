@@ -29,7 +29,7 @@ def generate_image(name, last_name):
 
     # Calculate text position to center it
     # text_position = ((img_width - text_width) // 2, (img_height - text_height) // 2)
-    text_position = ((img_width - text_width) // 2, 600)
+    text_position = ((img_width - text_width) // 2, 570)
 
     # Define text color (white in this example)
     text_color = (169, 44, 42)
