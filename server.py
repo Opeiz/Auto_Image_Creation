@@ -28,7 +28,7 @@ def generate_image(name, last_name):
     text_width, text_height = text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
 
     # Calculate text position to center it
-    text_position = ((img_width - text_width) // 2, 525)
+    text_position = ((img_width - text_width) // 2, 540)
 
     # Define text color (white in this example)
     text_color = (169, 44, 42)
