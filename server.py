@@ -10,7 +10,7 @@ def generate_image(name, last_name):
         image = Image.open(image_path) 
         draw = ImageDraw.Draw(image)
     except IOError:
-        raise RuntimeError("Image file not found or could not be loaded. Please check the font path.")
+        raise RuntimeError("Image file not found or could not be loaded. Please check the font path.")  
     # Create a drawing context
 
     # Load a font (adjust path if needed)
@@ -35,7 +35,7 @@ def generate_image(name, last_name):
     text_color = (169, 44, 42)
 
     # Add text to image
-    draw.text(text_position, name + last_name, font=font, fill=text_color)
+    draw.text(text_position, name + " " + last_name, font=font, fill=text_color)
 
     # Save the personalized ticket
     # Save image in memory
