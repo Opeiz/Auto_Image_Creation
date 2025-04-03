@@ -5,10 +5,13 @@ import os
 
 def generate_image(name, last_name):
     # Load the template image
-    image = Image.open("image.png")
-
+    try:
+        image_path = os.path.join("1x", "Imagen.png")
+        image = Image.open(image_path) 
+        draw = ImageDraw.Draw(image)
+    except IOError:
+        raise RuntimeError("Image file not found or could not be loaded. Please check the font path.")
     # Create a drawing context
-    draw = ImageDraw.Draw(image)
 
     # Load a font (adjust path if needed)
     try:
