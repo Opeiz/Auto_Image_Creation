@@ -10,7 +10,7 @@ def generate_image(name, last_name):
     draw = ImageDraw.Draw(image)
 
     # Load a font (adjust path if needed)
-    font = ImageFont.truetype("arial.ttf", 60)
+    font = ImageFont.truetype("futura\Futura Bold font.ttf", 60)
 
     # Get image dimensions
     img_width, img_height = image.size
