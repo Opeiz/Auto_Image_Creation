@@ -16,7 +16,7 @@ def generate_image(name, last_name):
     # Load a font (adjust path if needed)
     try:
         font_path = os.path.join("static", "Futura-Bold.ttf")
-        font = ImageFont.truetype(font_path, 60)
+        font = ImageFont.truetype(font_path, 120)
     except IOError:
         raise RuntimeError("Font file not found or could not be loaded. Please check the font path.")
 
@@ -29,7 +29,7 @@ def generate_image(name, last_name):
 
     # Calculate text position to center it
     # text_position = ((img_width - text_width) // 2, (img_height - text_height) // 2)
-    text_position = ((img_width - text_width) // 2, 555)
+    text_position = ((img_width - text_width) // 2, 600)
 
     # Define text color (white in this example)
     text_color = (169, 44, 42)
