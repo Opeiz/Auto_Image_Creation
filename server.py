@@ -3,6 +3,22 @@ from flask import Flask, request, send_file
 import io
 import os
 
+def normalize_name(nombre, apellidos):
+    full = f"{nombre} {apellidos}".strip()
+
+    # Split and deduplicate (preserving order)
+    words = full.split()
+    seen = set()
+    cleaned = []
+    for w in words:
+        lw = w.lower()
+        if lw not in seen:
+            seen.add(lw)
+            # Capitalize properly
+            cleaned.append(w.capitalize())
+
+    return " ".join(cleaned)
+
 def generate_image(name, last_name):
     # Load the template image
     try:
@@ -20,20 +36,14 @@ def generate_image(name, last_name):
     except IOError:
         raise RuntimeError("Font file not found or could not be loaded. Please check the font path.")
 
-    # Transform name and last_name to capitalize the first letter
-    name = name.strip().capitalize()
-    last_name = last_name.strip().capitalize()
-
-    if last_name in name:
-        text = name
-    else:
-        text = name + " " + last_name
+    # Normalize the name and last name
+    full_name = normalize_name(name, last_name)
 
     # Get image dimensions
     img_width, img_height = image.size
 
     # Calculate text size
-    text_bbox = draw.textbbox((0, 0), text, font=font)
+    text_bbox = draw.textbbox((0, 0), full_name, font=font)
     text_width, text_height = text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
 
     # Calculate text position to center it
@@ -43,7 +53,7 @@ def generate_image(name, last_name):
     text_color = (169, 44, 42)
 
     # Add text to image
-    draw.text(text_position, text, font=font, fill=text_color)
+    draw.text(text_position, full_name, font=font, fill=text_color)
 
     # Save the personalized ticket
     # Save image in memory
