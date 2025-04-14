@@ -33,8 +33,14 @@ def generate_image(name, last_name):
     # Define text color (white in this example)
     text_color = (169, 44, 42)
 
+    if last_name in name:
+        text = name
+    else:
+        text = name + " " + last_name
+
+
     # Add text to image
-    draw.text(text_position, name + " " + last_name, font=font, fill=text_color)
+    draw.text(text_position, text, font=font, fill=text_color)
 
     # Save the personalized ticket
     # Save image in memory
