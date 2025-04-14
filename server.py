@@ -15,16 +15,25 @@ def generate_image(name, last_name):
 
     # Load a font (adjust path if needed)
     try:
-        font_path = os.path.join("static", "Futura-Bold.ttf")
+        font_path = os.path.join("static", "futur.ttf")
         font = ImageFont.truetype(font_path, 120)
     except IOError:
         raise RuntimeError("Font file not found or could not be loaded. Please check the font path.")
+
+    # Transform name and last_name to capitalize the first letter
+    name = name.strip().capitalize()
+    last_name = last_name.strip().capitalize()
+
+    if last_name in name:
+        text = name
+    else:
+        text = name + " " + last_name
 
     # Get image dimensions
     img_width, img_height = image.size
 
     # Calculate text size
-    text_bbox = draw.textbbox((0, 0), f"{name} {last_name}" , font=font)
+    text_bbox = draw.textbbox((0, 0), text, font=font)
     text_width, text_height = text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
 
     # Calculate text position to center it
@@ -32,12 +41,6 @@ def generate_image(name, last_name):
 
     # Define text color (white in this example)
     text_color = (169, 44, 42)
-
-    if last_name in name:
-        text = name
-    else:
-        text = name + " " + last_name
-
 
     # Add text to image
     draw.text(text_position, text, font=font, fill=text_color)
