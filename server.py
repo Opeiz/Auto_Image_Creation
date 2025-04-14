@@ -66,7 +66,7 @@ app = Flask(__name__)
 
 @app.route('/image')
 def serve_image():
-    name = request.args.get("name", "Guest")
+    name = request.args.get("name", "")
     last_name = request.args.get("lastname", "")
     img_io = generate_image(name, last_name)
     return send_file(img_io, mimetype='image/png')
