@@ -4,10 +4,23 @@ import io
 import os
 
 def normalize_name(nombre, apellidos):
-    full = f"{nombre} {apellidos}".strip()
+    nombre = nombre.strip()
+    apellidos = apellidos.strip()
+
+    if len(nombre) >= 2:
+        primer_nombre = nombre.split()
+        nombre = primer_nombre[0]
+
+    if len(apellidos) >= 2:
+        apellidos = apellidos.split()
+        apellidos = apellidos[0]
 
     # Split and deduplicate (preserving order)
-    words = full.split()
+    words = [nombre, apellidos]
+
+    if len(words) == 4:
+        words = [words[0], words[2]]
+
     seen = set()
     cleaned = []
     for w in words:
@@ -68,6 +81,7 @@ app = Flask(__name__)
 def serve_image():
     name = request.args.get("name", "")
     last_name = request.args.get("lastname", "")
+    
     img_io = generate_image(name, last_name)
     return send_file(img_io, mimetype='image/png')
 
