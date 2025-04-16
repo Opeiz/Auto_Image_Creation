@@ -4,33 +4,27 @@ import io
 import os
 
 def normalize_name(nombre, apellidos):
-    nombre = nombre.strip()
-    apellidos = apellidos.strip()
+    nombre = nombre.strip().title()
+    apellidos = apellidos.strip().title()
 
-    if len(nombre) >= 2:
-        primer_nombre = nombre.split()
-        nombre = primer_nombre[0]
+    nombre_parts = nombre.split()
+    apellido_parts = apellidos.split()
 
-    if len(apellidos) >= 2:
-        apellidos = apellidos.split()
-        apellidos = apellidos[0]
+    if not apellidos:
+        # If there's no apellido, try to get first two words from nombre
+        if len(nombre_parts) >= 2:
+            words = " ".join([nombre_parts[0], nombre_parts[1]])
+        else:
+            words = nombre_parts[0] if nombre_parts else ""
+    else:
+        primer_nombre = nombre_parts[0] if nombre_parts else ""
+        primer_apellido = apellido_parts[0] if apellido_parts else ""
+        if primer_apellido and primer_apellido != primer_nombre:
+            words = " ".join([primer_nombre, primer_apellido])
+        else:
+            words = primer_nombre
 
-    # Split and deduplicate (preserving order)
-    words = [nombre, apellidos]
-
-    if len(words) == 4:
-        words = [words[0], words[2]]
-
-    seen = set()
-    cleaned = []
-    for w in words:
-        lw = w.lower()
-        if lw not in seen:
-            seen.add(lw)
-            # Capitalize properly
-            cleaned.append(w.capitalize())
-
-    return " ".join(cleaned)
+    return words
 
 def generate_image(name, last_name):
     # Load the template image
